@@ -56,6 +56,38 @@
       </div>
 
       <!-- modal edit home form -->
+      <div id="modal-edit-home" class="modal">
+        <div class="modal-content">
+          <h4>Edit House</h4>
+          <!-- house name input edit -->
+          <div class="row">
+             <div class="input-field col s12">
+               <input id="create-name" type="text" class="validate" v-model="editHouse.name">
+               <label for="name" data-error="wrong" data-success="right" class="active">House Name</label>
+             </div>
+           </div>
+           <!-- house image input edit -->
+           <div class="row">
+              <div class="input-field col s12">
+                <input id="create-image-url" type="text" class="validate" v-model="editHouse.imageUrl">
+                <label for="image" data-error="wrong" data-success="right">Image Url</label>
+              </div>
+            </div>
+           <!-- house description input edit -->
+           <div class="row">
+              <div class="input-field col s12">
+                <textarea id="create-description" class="materialize-textarea" v-model="editHouse.description"></textarea>
+                <label for="textarea1">House Description</label>
+              </div>
+            </div>
+           <!-- house location input edit -->
+           <h5>Set Your Location Here : </h5>
+           <div id="map2"></div>
+        </div>
+        <div class="modal-footer">
+          <a class=" modal-action modal-close waves-effect waves-green btn-flat" v-on:click="editOneHouse()">Edit</a>
+        </div>
+      </div>
 
       <!-- nav -->
       <nav class="green">
@@ -82,7 +114,7 @@
                   <p>{{ house.description.substring(0, 30) + ' ....' }}</p>
                 </div>
                 <div class="card-action">
-                  <a v-on:click="editOneHouse()">Edit</a>
+                  <a v-on:click="preEditOneHouse(house._id)">Edit</a>
                   <a v-on:click="deleteOneHouse(house._id)">Delete</a>
                 </div>
               </div>

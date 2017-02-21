@@ -16,7 +16,9 @@ var app = new Vue({
       name: '',
       location: '',
       description: '',
-      imageUrl: ''
+      imageUrl: '',
+      lat: '',
+      lng: ''
     }
   },
   methods: {
@@ -30,6 +32,8 @@ var app = new Vue({
         })
     },
     createOneHouse: function () {
+      x = 0
+      y = 0
       axios.post('http://localhost:3000/api/houses', {
         name: app.inputHouse.name,
         location: app.inputHouse.location,
@@ -62,7 +66,46 @@ var app = new Vue({
           console.log(error)
         })
     },
-    editOneHouse: function (editid) {}
+    editOneHouse: function (editid) {},
+    preEditOneHouse: function (editid) {
+      $('#modal-edit-home').modal('open')
+      axios.get(`http://localhost:3000/api/houses/${editid}`)
+        .then(function (response) {
+          app.editHouse.name = response.data.name
+          app.editHouse.description = response.data.description
+          app.editHouse.imageUrl = response.data.imageUrl
+          // add maps to modal form
+          var map2 = new GMaps({
+            div: '#map2',
+            zoom: 11,
+            lat: -6.230259,
+            lng: 106.8537713,
+            click: function (e) {
+              map.removeMarkers()
+              map.addMarker({
+                lat: e.latLng.lat(),
+                lng: e.latLng.lng()
+              })
+              console.log(e.latLng.lat())
+              console.log(e.latLng.lng())
+              x = e.latLng.lat()
+              y = e.latLng.lng()
+            }
+          })
+          // add marker
+          map.addMarker({
+            lat: -12.043333,
+            lng: -77.028333,
+            title: 'Lima',
+            click: function (e) {
+              alert('You clicked in this marker')
+            }
+          })
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
   }
 })
 
