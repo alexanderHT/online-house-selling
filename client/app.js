@@ -33,8 +33,6 @@ var app = new Vue({
         })
     },
     createOneHouse: function () {
-      x = 0
-      y = 0
       axios.post('http://localhost:3000/api/houses', {
         name: app.inputHouse.name,
         location: app.inputHouse.location,
