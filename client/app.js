@@ -13,6 +13,7 @@ var app = new Vue({
       imageUrl: ''
     },
     editHouse: {
+      _id: '',
       name: '',
       location: '',
       description: '',
@@ -71,9 +72,11 @@ var app = new Vue({
       $('#modal-edit-home').modal('open')
       axios.get(`http://localhost:3000/api/houses/${editid}`)
         .then(function (response) {
+          app.editHouse._id = response.data._id
           app.editHouse.name = response.data.name
           app.editHouse.description = response.data.description
           app.editHouse.imageUrl = response.data.imageUrl
+          sessionStorage.setItem('editid', response.data.imageUrl)
           // add maps to modal form
           var map2 = new GMaps({
             div: '#map2',
