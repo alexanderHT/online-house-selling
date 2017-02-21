@@ -67,7 +67,22 @@ var app = new Vue({
           console.log(error)
         })
     },
-    editOneHouse: function (editid) {},
+    editOneHouse: function (editid) {
+      axios.put(`http://localhost:3000/api/houses`, {
+        id: app.editHouse._id,
+        name: app.editHouse.name,
+        description: app.editHouse.description
+      })
+        .then(function (response) {
+          console.log(response)
+          document.getElementById(`${response.data._id}`)
+          $(`#${response.data._id} span`).html(response.data.name)
+          $(`#${response.data._id} p`).html(response.data.description)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
     preEditOneHouse: function (editid) {
       $('#modal-edit-home').modal('open')
       axios.get(`http://localhost:3000/api/houses/${editid}`)
@@ -76,7 +91,6 @@ var app = new Vue({
           app.editHouse.name = response.data.name
           app.editHouse.description = response.data.description
           app.editHouse.imageUrl = response.data.imageUrl
-          sessionStorage.setItem('editid', response.data.imageUrl)
           // add maps to modal form
           var map2 = new GMaps({
             div: '#map2',
